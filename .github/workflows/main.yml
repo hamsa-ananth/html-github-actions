@@ -1,0 +1,28 @@
+
+name: Deploy Static Website to EC2
+
+on:
+  push:
+    branches:
+      - main  # Triggers deployment whenever you push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download code from the GitHub repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Transfer HTML files to EC2 via SCP/SSH
+      - name: Copy files to EC2 Web Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "."           # Copies everything in the root folder
+          target: "/var/www/html" # Target folder for Apache / Nginx
+          strip_components: 0
