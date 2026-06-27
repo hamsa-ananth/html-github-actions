@@ -1,27 +1,12 @@
-name: Deploy Website to EC2
-
-on:
-  push:
-    branches:
-      - main  # Triggers the workflow every time you push to the main branch
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Step 1: Fetch the HTML repository files
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      # Step 2: Securely copy files to the EC2 web root using SCP
-      - name: Copy Files to EC2 Server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "."   # Copies everything in the repository root (HTML, CSS, JS, etc.)
-          target: "/var/www/html" # Default directory for Nginx/Apache
-          strip_components: 0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+</head>
+<body>
+    <h1>Welcome to My Website</h1>
+    <p>This is the default homepage for my project.</p>
+</body>
+</html>
